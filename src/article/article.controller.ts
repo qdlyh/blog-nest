@@ -68,19 +68,26 @@ export class ArticleController {
     }
   }
 
+  // http://localhost:3000/app/article/create
   @Post('create')
-  async createdArticle(@Body() body: CreateArticleDTO): Promise<object> {
-    let res = await this.articleService.createdArticle(body);
-    if (res) {
+  async createdArticle(@Body() createArticleDTO: CreateArticleDTO): Promise<object> {
+    try {
+      const res = await this.articleService.createdArticle(createArticleDTO);
+
+      if (!res) {
+        throw new Error('发布失败');
+      }
       return {
         code: 200,
         message: '发布成功',
+        // data: res, // 如果需要返回创建的文章数据，可以在这里返回
       };
-    } else {
+    } catch (error) {
+      // 根据错误类型返回不同的HTTP状态码和信息
       return {
         code: 500,
-        message: '发布失败',
-      };
+        message: error,
+      }
     }
   }
 

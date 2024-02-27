@@ -11,6 +11,7 @@ interface activeResponse<T = unknown> {
 
 @Injectable()
 export class ArticleService {
+  createQueryBuilder: any;
   constructor(
     @InjectRepository(Article)
     private readonly articleModel: Repository<Article>
@@ -22,18 +23,19 @@ export class ArticleService {
   // }
   async findAll(search: string, pageNumber: number = 1, pageSize: number = 10) {
     const totalSize = await this.articleModel.count()
-    // if (totalSize === 0 || pageNumber > Math.ceil(totalSize / pageSize)) {
-    //   return null;
-    // }
+    const query = this.articleModel.createQueryBuilder('article');
 
-    const res = await this.articleModel.findAndCount({
-      skip: (pageNumber - 1) * pageSize,
-      take: pageSize,
-      where: { title: Like(`%${search}%`) }
-    });
+    // 判断 search 是否为空字符串、null、undefined 等
+    if (search && search.trim() !== '') {
+      query.where('article.title LIKE :title', { title: `%${search.trim()}%` });
+    }
+    query.skip((pageNumber - 1) * pageSize)
+      .take(pageSize);
+
+    const res = await query.getMany();
 
     return {
-      data: res.length ? res[0] : [],
+      data: res.length ? res : [],
       pageInfo: {
         currentPage: pageNumber,
         pageSize: pageSize,
