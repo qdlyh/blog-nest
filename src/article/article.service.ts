@@ -37,7 +37,7 @@ export class ArticleService {
     return {
       data: res.length ? res : [],
       pageInfo: {
-        currentPage: pageNumber,
+        pageNumber: pageNumber,
         pageSize: pageSize,
         totalSize: totalSize,
         totalPages: Math.ceil(totalSize / pageSize),

@@ -15,7 +15,7 @@ import { Article } from './article/article.entity';
       password: '123456',
       database: 'blog',
       entities: [__dirname + '/**/*.entity{ .ts,.js}'],
-      synchronize: true,
+      synchronize: false,  //同步到数据库
     }),
     TypeOrmModule.forFeature([Article]),
     ArticleModule,

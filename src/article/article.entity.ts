@@ -11,6 +11,6 @@ export class Article {
   @Column('text')
   content: string;
 
-  @Column()
+  @Column('timestamp')
   date: string;
 }
