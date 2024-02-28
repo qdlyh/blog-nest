@@ -3,11 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { Article } from './article.entity';
 import { CreateArticleDTO, EditArticleDTO } from './article.dto';
-interface activeResponse<T = unknown> {
-  generatedMaps: Array<T>;
-  raw: Array<T>;
-  affected: number;
-}
+// interface activeResponse<T = unknown> {
+//   generatedMaps: Array<T>;
+//   raw: Array<T>;
+//   affected: number;
+// }
 
 @Injectable()
 export class ArticleService {
