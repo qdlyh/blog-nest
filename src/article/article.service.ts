@@ -40,6 +40,7 @@ export class ArticleService {
         pageNumber: pageNumber,
         pageSize: pageSize,
         totalSize: totalSize,
+        currentSize: res?.length || 0,
         totalPages: Math.ceil(totalSize / pageSize),
       },
     };
